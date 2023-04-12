@@ -34,3 +34,31 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+sudo -v ; curl https://rclone.org/install.sh | sudo bash -s beta
+        sudo cat <<EOF >> $(rclone config file | tail -n 1)
+        [gdrive-disk1]
+        type = drive
+        scope = drive
+        client_id = ${{ secrets.CLIENT_ID }}
+        client_secret = ${{ secrets.CLIENT_SECRET }}
+        token = ${{ secrets.TOKEN }}
+        team_drive = 1234567890
+        stop_on_upload_limit = true
+        server_side_across_configs = true
+        acknowledge_abuse = true
+        v2_download_min_size = 1G
+ 
+        [gdrive-disk2]
+        type = drive
+        scope = drive
+        client_id = ${{ secrets.CLIENT_ID }}
+        client_secret = ${{ secrets.CLIENT_SECRET }}
+        token = ${{ secrets.TOKEN }}
+        team_drive = 1234567890
+        stop_on_upload_limit = true
+        server_side_across_configs = true
+        acknowledge_abuse = true
+        v2_download_min_size = 1G
+        EOF
+        
+rclone move gdrive-disk1: gdrive-disk2: -P -v --stats-one-line --stats=5s

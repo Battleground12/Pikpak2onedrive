@@ -1,12 +1,19 @@
-on: push
+name: Release
+
+on:
+  push:
+    branches: [master]
+
 jobs:
-  rclone:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@master
-    - name: rclone
-      uses: wei/rclone@v1
-      env:
-        RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
-      with:
-        args: move Pikpak:/test Onedrive:/
+      - uses: actions/checkout@v2
+      - uses: NiceLabs/rclone-action@master
+        with:
+          github-token: ${{ secrets.SECRET_TOKEN }}
+          config: ${{ secrets.RCLONE_CONFIG }}
+          config-secret-name: RCLONE_CONFIG
+      - name: Upload Pre-built images
+        run: rclone move Pikpak:/test Onedrive:/
+       

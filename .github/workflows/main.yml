@@ -17,7 +17,12 @@
        disable_base64: true
       
     -  run: 'rclone lsd rclone-test-remote:'
-
+    - name: rclone
+      uses: wei/rclone@v1
+      env:
+        RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
+      with:
+        args: move Pikpak:/test Onedrive:/
     
 
     

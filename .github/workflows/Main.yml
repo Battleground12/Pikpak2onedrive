@@ -1,7 +1,11 @@
-on: push
-jobs:
-  rclone:
+ name: Pikpak2Onedrive
+ on: workflow_dispatch
+ jobs:
+
+  build:
+
     runs-on: ubuntu-latest
+
     steps:
     - name: Setup Rclone
     uses: AnimMouse/setup-rclone@v1
@@ -11,17 +15,17 @@ jobs:
         type = http
         url = https://beta.rclone.org/test/
       disable_base64: true
-      
-        - run:'rclone lsd rclone-test-remote:'
-
-
-
-    - uses: actions/checkout@master
+ run: 'rclone lsd rclone-test-remote:'
+   	- uses: actions/checkout@master
     - name: rclone
       uses: wei/rclone@v1
       env:
         RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
       with:
         args: copy <source>:<source_path> <dest>:<dest_path>
+    
 
-      
+    
+
+
+

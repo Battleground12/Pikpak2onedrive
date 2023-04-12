@@ -1,19 +1,22 @@
-name: Release
-
-on:
-  push:
-    branches: [master]
-
+on: push
 jobs:
-  build:
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - uses: NiceLabs/rclone-action@master
-        with:
-          github-token: ${{ secrets.SECRET_TOKEN }}
-          config: ${{ secrets.RCLONE_CONFIG }}
-          config-secret-name: RCLONE_CONFIG
-      - name: Upload Pre-built images
-        run: rclone move Pikpak:/test Onedrive:/
-       
+  rclone:
+    runs-on: ubuntu-latest
+    
+
+      - name:Setup Rclone
+    uses: AnimMouse/setup-rclone@v1
+    with:
+      rclone_config: |
+        [rclone-test-remote]
+        type = http
+        url = https://beta.rclone.org/test/
+      disable_base64: true
+
+        - uses:actions/checkout@master
+        - name:rclone
+      uses: wei/rclone@v1
+    env:
+        RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
+    with:
+        args: move Pikpak:/tv Onedrive:/

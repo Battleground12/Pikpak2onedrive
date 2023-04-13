@@ -1,3 +1,4 @@
+name: Pikpak2Onedrive
 on: workflow_dispatch
 jobs:
   rclone:

@@ -2,7 +2,7 @@ on: workflow_dispatch
 jobs:
   rclone:
     runs-on: ubuntu-latest
-!/usr/bin/env bash
+     !/usr/bin/env bash
 
 # error codes
 # 0 - exited without problems

@@ -1,30 +1,12 @@
- name: Pikpak2Onedrive
- on: workflow_dispatch
-
+on: workflow_dispatch
 jobs:
-
-  build:
-
+  rclone:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Setup Rclone
-    uses: AnimMouse/setup-rclone@v1
-    
-  - run: 'rclone lsd --http-url https://beta.rclone.org :http:'
-    
-  - run: 'rclone lsd :http:'
-    env:
-      RCLONE_HTTP_URL: https://beta.rclone.org
+    - uses: AnimMouse/setup-rclone@v1
     - name: rclone
       uses: wei/rclone@v1
       env:
         RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
       with:
-        args: move Pikpak:/test Onedrive:/
-    
-
-    
-
-
-
+        args: copy <source>:<source_path> <dest>:<dest_path>

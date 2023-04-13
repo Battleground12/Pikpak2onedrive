@@ -1,0 +1,11 @@
+steps:
+  - name: Setup Rclone
+    uses: AnimMouse/setup-rclone@v1
+    with:
+      rclone_config: |
+        [rclone-test-remote]
+        type = http
+        url = https://beta.rclone.org/test/
+      disable_base64: true
+      
+  - run: 'rclone lsd rclone-test-remote:'
